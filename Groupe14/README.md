@@ -1,6 +1,6 @@
 # A comparative study of RAG techniques for generating image captions: Phase 1 (database)
 
-Group: **[number]** | Members: **[names]** | Course: Introduction to image processing, University of Algiers 1
+Group: **14** | Members: **Arslane Aicha Razen, Aya Louetri, Zerd Lina Assia, Hiba Hassani** | Course: Introduction to image processing, University of Algiers 1
 
 This repository contains **Phase 1**: data exploration, cleaning and preparation of the shared database used by all groups
 (MS COCO images + captions, object metadata, CLIP embeddings, FAISS indexes).
