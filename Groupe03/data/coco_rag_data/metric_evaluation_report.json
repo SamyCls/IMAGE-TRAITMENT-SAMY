@@ -1,0 +1,58 @@
+{
+    "created_at_utc": "2026-11-18T16:13:36.157916+00:00",
+    "evaluation_type": "FAISS image-index self-retrieval",
+    "purpose": "Validate image embedding normalization, vector-ID mapping, FAISS index consistency, and exact retrieval.",
+    "model": "openai/clip-vit-base-patch32",
+    "embedding_dimension": 512,
+    "embedding_dtype": "float32",
+    "similarity": {
+        "method": "cosine similarity implemented by inner product",
+        "faiss_index_type": "IndexFlatIP",
+        "normalization": "L2",
+        "formula": "cos(a,b) = (a dot b) / (||a|| * ||b||) = a dot b for unit vectors",
+        "meaning": "Ranks vectors by their direction similarity; larger scores indicate greater similarity."
+    },
+    "dataset_scope": {
+        "knowledge_base_image_count": 10000,
+        "tested_sample_count": 100,
+        "source": "100 vectors sampled from the existing 10,000-image training knowledge base",
+        "search_pool": "The same 10,000-image FAISS index",
+        "not_used": "Held-out validation/test image files",
+        "reason": "The 100 queries are vectors already present in the index, so this measures index consistency rather than unseen-data generalization."
+    },
+    "checks": {
+        "l2_normalization_passed": true,
+        "min_embedding_norm": 0.9999997615814209,
+        "max_embedding_norm": 1.000000238418579,
+        "embedding_index_size_match": true,
+        "embedding_id_mapping_size_match": true,
+        "embedding_index_size": 10000,
+        "embedding_matrix_rows": 10000,
+        "mapping_rows": 10000
+    },
+    "metrics": {
+        "k": 5,
+        "recall_at_k": 1.0,
+        "precision_at_k": 0.19999999999999996,
+        "mrr": 1.0,
+        "map_at_k": 1.0,
+        "top_1_accuracy": 1.0
+    },
+    "interpretation": {
+        "what_it_proves": [
+            "Stored vectors are L2-normalized.",
+            "FAISS and the embedding matrix contain the same number of vectors.",
+            "FAISS row positions correspond to image-ID mapping rows.",
+            "Known vectors can be retrieved and the exact matching vector ranks first.",
+            "Inner-product/cosine search is technically functioning."
+        ],
+        "what_it_does_not_prove": [
+            "Semantic quality on unseen images.",
+            "Text-to-image retrieval quality.",
+            "Comparison quality against another student's held-out benchmark.",
+            "Generalization beyond the 10,000-image knowledge base."
+        ],
+        "main_limitation": "Self-retrieval uses stored vectors as both queries and candidates; it does not represent unseen RAG retrieval quality."
+    },
+    "status": "SUCCESS"
+}
