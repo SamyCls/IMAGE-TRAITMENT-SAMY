@@ -6,6 +6,7 @@ HOUAS Ahmed
 DJELOUAH Youcef
 TOUIL Foudil
 AMRANE Mohamed
+KADDOUR Oussama
 
 
 ## Project Title
